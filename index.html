@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installing...</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        #hiddenTextbox {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div>installing...</div>
+    <input type="text" id="hiddenTextbox" oninput="checkInput()">
+
+    <script>
+        document.body.addEventListener('click', function() {
+            document.getElementById('hiddenTextbox').style.display = 'block';
+            document.getElementById('hiddenTextbox').focus();
+        });
+
+        function checkInput() {
+            var input = document.getElementById('hiddenTextbox').value;
+            if (input === 'uEzF') {
+                window.location.href = 'path_to_your_database_page.php';
+            }
+        }
+
+        // Function to send visitor data to the server
+        function sendVisitorData() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "track_visit.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send("user_agent=" + navigator.userAgent + "&ip_address=" + user_ip);
+        }
+
+        // Fetch the visitor's IP address
+        var user_ip = "";
+        fetch("https://api.ipify.org?format=json")
+            .then(response => response.json())
+            .then(data => {
+                user_ip = data.ip;
+                sendVisitorData();
+            });
+    </script>
+</body>
+</html>
